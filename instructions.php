@@ -45,6 +45,16 @@
                             <li>
                                 Once done, wait for more instructions and add some PHP validation (Groan).
                             </li>
+                            <li>
+                                Once done, wait for more instructions and add some PHP validation (Groan).
+                            </li>
+                            <hr>
+                            <li>
+                                Add a button on each of the projects on the index.php page to delete. Style accordingly and research how to add JavaScript to confirm delete.
+                            </li>
+                            <li>
+                                Do the delete. That is all.
+                            </li>
                         </ul>
 
                         </div>
