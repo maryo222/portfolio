@@ -20,12 +20,8 @@
 
                         <div class="panel-body">
                             <h4><?= $project['title'] ?></h4>
-                            <p>
-                                <?= $project['content'] ?>
-                            </p>
-                            <a href="<?= $project['link'] ?>" class="btn btn-default btn-xs">
-                                View
-                            </a>
+                            <p><?= $project['content'] ?></p>
+                            <a href="<?= $project['link'] ?>" class="btn btn-default btn-xs">View</a>
                         </div>
                     </div>
                 </div>

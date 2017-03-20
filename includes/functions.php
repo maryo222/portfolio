@@ -12,6 +12,7 @@ try {
 	}
 }
 
+// retrieve project from database
 function getProject($dbh) {
 	$sth = $dbh->prepare("SELECT * FROM projects");
 	$sth->execute();
