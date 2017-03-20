@@ -22,6 +22,10 @@
                             <h4><?= $project['title'] ?></h4>
                             <p><?= $project['content'] ?></p>
                             <a href="<?= $project['link'] ?>" class="btn btn-default btn-xs">View</a>
+                            
+                            <form action="partials/delete.php?id=<?php echo $project['id']; ?>" method="POST">
+                            <button class="btn btn-default btn-xs" onclick="return confirm('are you sure you want to delete this item');">Delete</button>
+                            </form>
                         </div>
                     </div>
                 </div>
