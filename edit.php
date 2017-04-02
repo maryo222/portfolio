@@ -2,7 +2,7 @@
 	require 'includes/config.php';
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		updateProject($_POST['id'], $dbh, $_POST['title'],$_POST['image_url'],$_POST['content'],$_POST['link']);
+		updateProject($_POST['id'], $dbh, $_POST['title'], $_POST['image_url'], $_POST['content'], $_POST['link']);
 		redirect("index.php");
     }
 
@@ -14,7 +14,7 @@
 ?>
 
 	<form class="form-horizontal" role="form" method="POST" action="edit.php">
-		<input type="hidden" name="id" value="<?= $editProject['id'] ?>">
+		<input name="id" value="<?= $editProject['id'] ?>" type="hidden" >
 
 	    <!-- Form Title -->
 	    <div class="form-group">
