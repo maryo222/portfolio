@@ -41,12 +41,44 @@ function addProject($dbh, $title, $image_url, $content, $link) {
 	return $success;
 }
 
-// function deleteProject($dbh, $title, $image_url, $content, $link) {
-// 	// prepare statement that will be executed
-// 	$id=$_POST['id'];
-// 	$result = $db->prepare("DELETE FROM projects WHERE id= :id");
-// 	$result->bindParam(':id', $id);
-// 	$result->execute();
-// 	header("location: index.php");
-// }
+function deleteProject($id, $dbh) {
+	// prepare statement that will be executed
+	$result = $dbh->prepare("DELETE FROM projects WHERE id= :id");
+	$result->bindParam(':id', $id);
+	$result->execute();
+}
+
+function redirect($url) {
+	header('Location: ' . $url);
+	die();
+}
+
+function editProject($id, $dbh) {
+	// prepare statement that will be executed
+	$sth = $dbh->prepare("SELECT * FROM projects WHERE id = :id");
+	$sth->bindParam(':id', $id, PDO::PARAM_STR);
+	$sth->execute();
+
+	$result = $sth->fetch();
+	return $result;
+}
+
+function updateProject($id, $dbh, $title, $image_url, $content, $link) {
+	$sth = $dbh->prepare("UPDATE projects SET title = :title, image_url = :image_url, content = :content, link = :link WHERE id = :id");
+	// bind the $id to the SQL statement
+	$sth->bindParam(':id', $id, PDO::PARAM_STR);
+	// bind the $name to the SQL statement
+	$sth->bindParam(':title', $title, PDO::PARAM_STR);
+	// bind the $email to the SQL statement
+	$sth->bindParam(':image_url', $image_url, PDO::PARAM_STR);
+	// bind the $feedback to the SQL statement
+	$sth->bindParam(':content', $content, PDO::PARAM_STR);
+		// bind the $feedback to the SQL statement
+	$sth->bindParam(':link', $link, PDO::PARAM_STR);
+	// execute the statement 
+	$result = $sth->execute();
+	return $result;
+
+
+}
 
