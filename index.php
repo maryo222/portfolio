@@ -7,7 +7,7 @@
             redirect('index.php');
         }
         
-        else if ($_POST["_method"] == "edit") {
+        if ($_POST["_method"] == "edit") {
             $id=$_POST['editid'];
             // editProject($id, $dbh);
             redirect('edit.php?id=' . $id);
