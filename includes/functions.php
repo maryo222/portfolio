@@ -78,7 +78,53 @@ function updateProject($id, $dbh, $title, $image_url, $content, $link) {
 	// execute the statement 
 	$result = $sth->execute();
 	return $result;
-
-
 }
+
+function addUser($dbh, $username, $email, $password) {
+	// prepare statement that will be executed
+	$sth = $dbh->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+	$sth->bindParam(':username', $username, PDO::PARAM_STR);
+	$sth->bindParam(':email', $email, PDO::PARAM_STR);
+	$sth->bindParam(':password', $password, PDO::PARAM_STR);
+
+	// execute the statement 
+	$success = $sth->execute();
+	return $success;
+}
+
+function loggedIn() {
+	return !empty($_SESSION['username']);
+}
+
+function addMessage($message) {
+	$_SESSION['message'] = $message;
+}
+
+function showMessage() {
+    $message = '';
+    if (!empty($_SESSION['message'])) {
+        $message = $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+    return $message;
+}
+
+
+function getUser($dbh, $username) {
+	// prepare statement that will be executed
+	$sth = $dbh->prepare('SELECT * FROM `users` WHERE username = :username OR email = :email');
+	$sth->bindValue(':username', $username, PDO::PARAM_STR);
+	$sth->bindValue(':email', $username, PDO::PARAM_STR);
+
+	// execute the statement 
+	$sth->execute();
+
+	$row = $sth->fetch();
+
+	if (!empty($row)) {
+		return $row;
+	}
+	return false;
+}
+
 
