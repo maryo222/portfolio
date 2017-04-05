@@ -27,14 +27,14 @@
                 ?>
                 <!-- Start of Card -->
                 <div class="col-md-3">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" style="min-height:400px;">
                         <div class="panel-heading card-header">
                         <img class="img-responsive" src="<?= $project['image_url'] ?>">
                         </div>
 
                         <div class="panel-body">
-                            <h4><?= $project['title'] ?></h4>
-                            <p><?= $project['content'] ?></p>
+                            <h4><?= substr($project['title'], 0 , 20) ?></h4>
+                            <p><?= substr($project['content'], 0, 100) ?></p>
                             <a href="<?= $project['link'] ?>" class="btn btn-default btn-xs">View</a>
                             
                             <form action="index.php" method="POST">
