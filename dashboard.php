@@ -1,7 +1,9 @@
 <?php 
-    require 'includes/config.php';
-    require 'partials/header.php';
-    require 'partials/navigation.php';
+require 'includes/config.php';
+
+if (!loggedIn()) {
+    redirect('index.php');
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // define variables and set to empty values
@@ -12,10 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $content = $_POST['content'];  
     $link = $_POST['link']; 
 
-
     addProject($dbh, $title, $image_url, $content, $link);
-    } 
+}
+
+require 'partials/header.php';
+require 'partials/navigation.php';
+
 ?>
+
 
         <!-- Start of Content -->
         <div class="container">
