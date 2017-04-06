@@ -1,12 +1,40 @@
- <?php 
-    require 'partials/header.php';
-    require 'partials/navigation.php';     
+<?php
+require 'includes/config.php';
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+     
+    $username = $password = '';
+     // first validation
+    if (empty($_POST['username']) || empty($_POST['password'])) {
+        addMessage('Please enter both fields');
+        // redirect('login.php');
+    }
+     // user from database
+    $username = strtolower($_POST['username']);
+    $password = strtolower($_POST['password']);
+    // $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    $user = getUser($dbh, $username);
+
+    // text the eneterd details match login details
+    if (!empty($user) && ($username === strtolower($user['username']) || $username === strtolower($user['email'])) && password_verify($password, $user['password'])) {
+    // add data to sessions
+        $_SESSION['username'] = $user['username'];
+            redirect('index.php');
+            addMessage(('success'),'You have been logged in');
+        }
+    else {
+        addMessage(('error'),'Username and password do not match our records');
+    }
+ }  
+
+require 'partials/header.php';
+require 'partials/navigation.php';    
 ?>
 
 
         <!-- Start of Content -->
         <div class="container">
             <div class="row">
+                <?= showMessage() ?>
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">
                         <div class="panel-heading">Login</div>
@@ -15,10 +43,10 @@
 
                                 <!-- Email Input -->
                                 <div class="form-group">
-                                    <label for="email" class="col-md-4 control-label">Email Address</label>
+                                    <label for="username" class="col-md-4 control-label">Username/Email Address</label>
 
                                     <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control" name="email" value="" required="" autofocus="">
+                                        <input id="username" type="text" class="form-control" name="username" value="" required="" autofocus="">
 
                                     </div>
                                 </div>
