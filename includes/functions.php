@@ -96,17 +96,25 @@ function loggedIn() {
 	return !empty($_SESSION['username']);
 }
 
-function addMessage($message) {
-	$_SESSION['message'] = $message;
+function addMessage($type, $message) {
+  $_SESSION['flash'][$type][] = $message;
 }
 
-function showMessage() {
-    $message = '';
-    if (!empty($_SESSION['message'])) {
-        $message = $_SESSION['message'];
-        unset($_SESSION['message']);
+function showMessage($type = null)
+{
+  $messages = '';
+  if(!empty($_SESSION['flash'])) {
+    foreach ($_SESSION['flash'] as $key => $message) {
+      if(($type && $type === $key) || !$type) {
+        foreach ($message as $k => $value) {
+          unset($_SESSION['flash'][$key][$k]);
+          $key = ($key == 'error') ? 'danger': $key;
+          $messages .= '<div class="alert alert-' . $key . '">' . $value . '</div>' . "\n";
+        }
+      }
     }
-    return $message;
+  }
+  return $messages;
 }
 
 
@@ -125,6 +133,16 @@ function getUser($dbh, $username) {
 		return $row;
 	}
 	return false;
+}
+
+function singleProject($id, $dbh) {
+	// prepare statement that will be executed
+	$sth = $dbh->prepare("SELECT * FROM projects WHERE id = :id");
+	$sth->bindParam(':id', $id, PDO::PARAM_STR);
+	$sth->execute();
+
+	$result = $sth->fetch();
+	return $result;
 }
 
 
