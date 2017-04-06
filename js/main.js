@@ -5,7 +5,8 @@ function readURL(input) {
 
     $('#projectThumbnail').attr('src', url);
 
-  }else{
+  }
+  else{
    $('#projectThumbnail').attr('src', 'img/place-holder.png');
  }
 }
