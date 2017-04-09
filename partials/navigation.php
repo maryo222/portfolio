@@ -28,7 +28,7 @@
                     <?php if(loggedIn()): ?>
                         <li class="dropdown">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
-                                <img class="nav-profile-photo" src="https://www.gravatar.com/avatar/722386073723549e170eccc06a566818?s=80&d=mm&r=g">
+                                <img class="nav-profile-photo" img src="<?= get_gravatar($email = $_SESSION['email'])?>">
                                 <?= $_SESSION['username'] ?>
                                 <span class="caret"></span>
                             </a>
