@@ -1,6 +1,8 @@
 <?php
 require 'includes/config.php';
 
+$userDetails = (!empty($_GET['username']) && !empty($_GET['email']) && !empty($_GET['password'])) ? htmlspecialchars($_GET['username'] && $_GET['email'] && $_GET['password'],  ENT_QUOTES, 'utf-8') : '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // define variables and set to empty values
     $username = $email = $password = '';
@@ -11,18 +13,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
 	if($_POST['username'] === '' || $_POST['password'] === '' || $_POST['email'] === '') {
-		addMessage(('error'), "Registration was not successful");
+		addMessage('error', "Registration was not successful");
 	}
 	if ($_POST["password"] != $_POST["password-confirm"]) {
-		addmessage(('error'), "The passwords do not match");
+		addmessage('error', "The passwords do not match");
 	}
 	else {	    
 		$_SESSION['username'] = $_POST['username'];
 		$_SESSION['email'] = $_POST['email'];
 		$_SESSION['password'] = $_POST['password'];
+		addmessage('success', "You have registered successfully");
 		addUser($dbh, $username, $email, $hashedPassword);
-		addMessage(('success'),"You have been registered!");
-		redirect("login.php");
+		redirect("index.php");
 	}
 }
 
