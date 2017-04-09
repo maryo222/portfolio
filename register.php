@@ -1,15 +1,16 @@
 <?php
 require 'includes/config.php';
 
-$userDetails = (!empty($_GET['username']) && !empty($_GET['email']) && !empty($_GET['password'])) ? htmlspecialchars($_GET['username'] && $_GET['email'] && $_GET['password'],  ENT_QUOTES, 'utf-8') : '';
+// $userDetails = (!empty($_GET['username']) && !empty($_GET['email']) && !empty($_GET['password'])) ? htmlspecialchars($_GET['username'] && $_GET['email'] && $_GET['password'],  ENT_QUOTES, 'utf-8') : '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // define variables and set to empty values
     $username = $email = $password = '';
     // Add data from form
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = strtolower($_POST['password']);
+    $username = e($_POST['username']);
+    $email = e($_POST['email']);
+    $password = e($_POST['password']);
+    $passwordConfirm = e($_POST['password-confirm']);
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
 	if($_POST['username'] === '' || $_POST['password'] === '' || $_POST['email'] === '') {
@@ -18,13 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($_POST["password"] != $_POST["password-confirm"]) {
 		addmessage('error', "The passwords do not match");
 	}
-	else {	    
-		$_SESSION['username'] = $_POST['username'];
-		$_SESSION['email'] = $_POST['email'];
-		$_SESSION['password'] = $_POST['password'];
+	else {	  
+
+	$registered = addUser($dbh, $username, $email, $hashedPassword);  
+		
+		if($registered) {
+		$_SESSION['username'] = $username;
+		$_SESSION['email'] = $email;
 		addmessage('success', "You have registered successfully");
-		addUser($dbh, $username, $email, $hashedPassword);
 		redirect("index.php");
+		}
 	}
 }
 
