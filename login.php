@@ -1,11 +1,14 @@
 <?php
 require 'includes/config.php';
+
+    $userDetails = (!empty($_GET['username']) && !empty($_GET['password'])) ? htmlspecialchars($_GET['username'] && $_GET['password'],  ENT_QUOTES, 'utf-8') : '';
+    
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
      
     $username = $password = '';
      // first validation
     if (empty($_POST['username']) || empty($_POST['password'])) {
-        addMessage('Please enter both fields');
+        addMessage('error', 'Please enter both fields');
         // redirect('login.php');
     }
      // user from database
@@ -18,11 +21,12 @@ require 'includes/config.php';
     if (!empty($user) && ($username === strtolower($user['username']) || $username === strtolower($user['email'])) && password_verify($password, $user['password'])) {
     // add data to sessions
         $_SESSION['username'] = $user['username'];
+        $_SESSION['email'] = $user['email'];
+            addMessage('success','You have been logged in');
             redirect('index.php');
-            addMessage(('success'),'You have been logged in');
         }
     else {
-        addMessage(('error'),'Username and password do not match our records');
+        addMessage('error','Username and password do not match our records');
     }
  }  
 
