@@ -1,9 +1,7 @@
 <?php 
     require 'includes/config.php';
 
-if (loggedIn()) {
-    addMessage(('success'), "You have been logged in");
-}
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($_POST["_method"] == "delete") {
             $id=$_POST['id'];
@@ -53,25 +51,25 @@ if (loggedIn()) {
                             <h4><?= substr($project['title'], 0 , 20) ?></h4>
                             <p><?= substr($project['content'], 0, 100) ?></p>
                             
-                           <form method="POST" action="index.php">
+                           <form method="POST" action="index.php" style="display: inline-block;">
                                 <input name="_method" value="view" type="hidden">
                                 <input name="viewid" value="<?= $project['id'] ?>" type="hidden">
-                                <button class="btn btn-default btn-xs" type="submit"> View </button>
+                                <button class="btn btn-default btn-xs" type="submit"> <i class="icon ion-eye"></i> View </button>
                             </form>
-
-<!--                             <a href="<?= $project['link'] ?>" class="btn btn-default btn-xs">View</a> -->
                             
-                            <form action="index.php" method="POST">
+                            <div class="pull-right">
+                            <form action="index.php" method="POST" style="display: inline-block;">
                                 <input name="_method" value="delete" type="hidden">
                                 <input name="id" value="<?= $project['id'] ?>" type="hidden">
-                                <button class="btn btn-default btn-xs" onclick="return confirm('are you sure you want to delete this item');" type="submit">Delete</button>
+                                <button class="btn btn-danger btn-xs" onclick="return confirm('are you sure you want to delete this item');" type="submit"><i class="icon ion-ios-close-outline"></i> Delete</button>
                             </form>
 
-                            <form method="POST" action="index.php">
+                            <form method="POST" action="index.php" style="display: inline-block;">
                                 <input name="_method" value="edit" type="hidden">
                                 <input name="editid" value="<?= $project['id'] ?>" type="hidden">
-                                <button class="btn btn-default btn-xs" type="submit"> Edit </button>
+                                <button class="btn btn-info btn-xs" type="submit"> <i class="icon ion-edit"></i> Edit</button>
                             </form>
+                            </div>
                         </div>
                     </div>
                 </div>
