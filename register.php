@@ -13,6 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passwordConfirm = e($_POST['password-confirm']);
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
+
+
 	if($_POST['username'] === '' || $_POST['password'] === '' || $_POST['email'] === '') {
 		addMessage('error', "Registration was not successful");
 	}
@@ -22,10 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	else {	  
 
 	$registered = addUser($dbh, $username, $email, $hashedPassword);  
+	$user = getUser($dbh, $username);
 		
 		if($registered) {
 		$_SESSION['username'] = $username;
 		$_SESSION['email'] = $email;
+        $_SESSION['id'] = $user['id'];
 		addmessage('success', "You have registered successfully");
 		redirect("index.php");
 		}
