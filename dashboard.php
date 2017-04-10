@@ -15,6 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $link = $_POST['link']; 
 
     addProject($dbh, $title, $image_url, $content, $link);
+    addMessage('success', 'Project successfully added');
+    redirect('index.php');
 }
 
 require 'partials/header.php';
