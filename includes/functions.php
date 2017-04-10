@@ -54,7 +54,7 @@ function addProject($dbh, $title, $image_url, $content, $link) {
 		// bind the $feedback to the SQL statement
 	$sth->bindParam(':link', $link, PDO::PARAM_STR);
 
-	$sth->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_STR);
+	$sth->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
 	// execute the statement 
 	$success = $sth->execute();
 
