@@ -55,7 +55,7 @@
               <label for="image_url" class="col-md-4 control-label">Image Url</label>
 
               <div class="col-md-6">
-                <input id="image_url" type="text" class="form-control" name="url" value="<?= $editProject['image_url'] ?>" required="" autofocus="" onchange="readURL(this)">
+                <input id="image_url" type="text" class="form-control" name="image_url" value="<?= $editProject['image_url'] ?>" required="" autofocus="" onchange="readURL(this)">
               </div>
             </div>
 
