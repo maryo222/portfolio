@@ -21,8 +21,7 @@
             redirect('view.php?id=' . $id);
         }
     }
-
-
+    $projects = getProject($dbh);
     
     require 'partials/header.php';
     require 'partials/navigation.php';
@@ -42,7 +41,7 @@
                 ?>
                 <!-- Start of Card -->
                 <div class="col-md-3">
-                    <div class="panel panel-default" style="min-height:400px;">
+                    <div class="panel panel-default" style="min-height:360px;">
                         <div class="panel-heading card-header">
                         <img class="img-responsive" src="<?= $project['image_url'] ?>">
                         </div>
@@ -56,6 +55,8 @@
                                 <input name="viewid" value="<?= $project['id'] ?>" type="hidden">
                                 <button class="btn btn-default btn-xs" type="submit"> <i class="icon ion-eye"></i> View </button>
                             </form>
+
+                            <?php if(userOwns($project['user_id'])): ?>
                             
                             <div class="pull-right">
                             <form action="index.php" method="POST" style="display: inline-block;">
@@ -69,7 +70,11 @@
                                 <input name="editid" value="<?= $project['id'] ?>" type="hidden">
                                 <button class="btn btn-info btn-xs" type="submit"> <i class="icon ion-edit"></i> Edit</button>
                             </form>
+
+
+
                             </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
